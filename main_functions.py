@@ -54,7 +54,7 @@ def process_map(filename):
 
     return users
 
-OSMFILE = "example.osm"
+OSMFILE = "washdc.osm"
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 
