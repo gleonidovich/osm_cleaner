@@ -58,10 +58,33 @@ OSMFILE = "washdc.osm"
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 
-expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road", 
-            "Trail", "Parkway", "Commons"]
+expected = ["Alley","Avenue", "Bend", "Bottom", "Boulevard", "Bridge", 
+			"Bypass", "Cape", "Causeway", "Center", "Circle", "Common", 
+			"Corner",  "Court", "Crossing", "Crossroad", "Curve", "Drive", 
+			"Expressway", "Flat", "Fort", "Freeway", "Garden", "Gateway",  
+			"Harbor", "Heights", "Highway", "Junction", "Landing", "Lane", 
+			"Loop", "Mall", "Manor", "Motorway", "Overpass", "Park", 
+			"Parkway", "Pike", "Place", "Plaza", "Point", "Port", "Road", 
+			"Route", "Row", "Spring", "Springs", "Square", "Station", 
+			"Street", "Terrace", "Throughway", "Trail", "Tunnel", "Turnpike", 
+			"Union", "Way", ]
 
-mapping = { "St": "Street",
+mapping = { "Aly": "Alley",
+			"Aly.": "Alley",
+			"Ave": "Avenue",
+			"Ave.": "Avenue",
+			"Bnd": "Bend",
+			"Bnd.": "Bend",
+			"Bot": "Bottom",
+			"Bot.": "Bottom",
+			"Blvd": "Boulevard",
+			"Blvd.": "Boulevard",
+			"Brg": "Bridge",
+			"Brg.": "Bridge",
+			"Byp": "Bypass",
+			"Byp.": "Bypass",
+			
+			"St": "Street",
             "St.": "Street",
             "Ave": "Avenue",
             "Rd.": "Road"
