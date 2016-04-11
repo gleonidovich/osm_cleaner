@@ -59,15 +59,15 @@ street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 
 expected = ["Alley","Avenue", "Bend", "Bottom", "Boulevard", "Bridge", 
-			"Bypass", "Cape", "Causeway", "Center", "Circle", "Common", 
-			"Corner",  "Court", "Crossing", "Crossroad", "Curve", "Drive", 
-			"Expressway", "Flat", "Fort", "Freeway", "Garden", "Gateway",  
-			"Harbor", "Heights", "Highway", "Junction", "Landing", "Lane", 
-			"Loop", "Mall", "Manor", "Motorway", "Overpass", "Park", 
-			"Parkway", "Pike", "Place", "Plaza", "Point", "Port", "Road", 
-			"Route", "Row", "Spring", "Springs", "Square", "Station", 
-			"Street", "Terrace", "Throughway", "Trail", "Tunnel", "Turnpike", 
-			"Union", "Way", ]
+            "Bypass", "Cape", "Causeway", "Center", "Circle", "Common", 
+            "Corner",  "Court", "Crossing", "Crossroad", "Curve", "Drive", 
+            "Expressway", "Flat", "Fort", "Freeway", "Garden", "Gateway",  
+            "Harbor", "Heights", "Highway", "Hill", "Hills", "Junction", 
+            "Landing", "Lane", "Loop", "Mall", "Manor", "Motorway", "Overlook", 
+            "Overpass", "Park", "Parkway", "Passage", "Pike", "Place", "Plaza", 
+            "Point", "Port", "Ridge", "Road", "Route", "Row", "Run", "Spring", 
+            "Springs", "Square", "Station", "Street", "Terrace", "Throughway", 
+            "Trail", "Tunnel", "Turnpike", "Union", "View", "Way"]
 
 mapping = { "Aly": "Alley",
 			"Aly.": "Alley",
@@ -83,7 +83,12 @@ mapping = { "Aly": "Alley",
 			"Brg.": "Bridge",
 			"Byp": "Bypass",
 			"Byp.": "Bypass",
-			
+			"Cpe": "Cape",
+			"Cpe.": "Cape",
+			"Cswy": "Causeway",
+			"Cswy.": "Causeway",
+			"Ctr": "Center",
+			"Ctr.": "Center",
 			"St": "Street",
             "St.": "Street",
             "Ave": "Avenue",
@@ -117,7 +122,6 @@ def audit(osmfile):
 
 
 def update_name(name, mapping):
-
     for i in mapping:
         if i in name:
             name = name.replace(i, mapping[i])
