@@ -1,0 +1,4 @@
+Resources referenced:
+
+http://pe.usps.gov/text/pub28/28apc_002.htm - Postal Service resource for street types and abbreviations
+stackoverflow and google for all other issues
