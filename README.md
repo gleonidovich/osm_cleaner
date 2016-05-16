@@ -1,3 +1,3 @@
 # osm_cleaner
 
-This is part of a project for Udacity Data Analyst Nanodegree.
+This project is to develop skills for cleaning up data in the python/MongoDB environment. The data used for this project are from the Washington, DC area.
