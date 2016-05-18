@@ -211,7 +211,7 @@ def shape_element(element):
                 node[i] = element.get(i)
         
         node['created'] = created
-        if len(pos) > 0:
+        if len(pos) == 2:
             node['pos'] = [pos['lat'], pos['lon']]
         
         nds = []
