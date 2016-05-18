@@ -58,6 +58,12 @@ mapping = { "ave": "Avenue",
             "St.": "Street" }
 
 def audit_street_type(street_types, street_name):
+    '''Audit a string against a set of street types.
+
+    This function determines whether the ending of a given street name 
+    is within an expected set of street types.
+    '''
+
     m = street_type_re.search(street_name)
     if m:
         street_type = m.group()
@@ -65,9 +71,18 @@ def audit_street_type(street_types, street_name):
             street_types[street_type].add(street_name)
 
 def is_street_name(elem):
+    '''Check if element is a street name.'''
     return (elem.attrib['k'] == "addr:street")
 
 def audit(osmfile):
+    '''Audit an OSM file for unexpected street names.
+
+    This function parses through each lines of an OSM data file 
+    to determine whether the street name in each "node" or "way" 
+    is properly formatted. Any unexpected results are stored in 
+    a defaultdict object with the unexpected ending at the key 
+    and the full street names as value(s).
+    '''
     osm_file = open(osmfile, "r", encoding="utf8")
     street_types = defaultdict(set)
     for event, elem in ET.iterparse(osm_file, events=("start",)):
@@ -81,29 +96,54 @@ def audit(osmfile):
 
 # check whether the street type needs to be fixed
 def check_street_type(street_name):
+    '''Finds the street type of the argument.
+
+    This function checks the ending of a street name to determine if
+    it is an expected street type, an abbreviation, or neither, and 
+    the starting position of the last word.
+
+    Returns:
+    return1 == True if it is a valid street type
+    return2 == True if the street type needs fixing
+    return3 is the starting position of the street type in the name
+    '''
     m = street_type_re.search(street_name.strip())
     if m:
         street_type = m.group()
-        # return1 == True if it is a valid street type
-        # return2 == True if the street type needs fixing
-        # return3 is the starting position of the street type in the name string
         return street_type in expected, street_type in mapping.keys(), m.start()
     else:
         return False, False, 0
 
-# check whether the direction need to be fixed
 def check_if_direction(street_name):
+    '''Finds the direction of the argument.
+
+    This function checks the ending of a street name to determine if
+    it is an expected ordinal direction, an abbreviated direction, or 
+    neither, and the starting position of the last word.
+
+    Returns:
+    return1 == True if it is a valid direction
+    return2 == True if the direction needs fixing
+    return3 is the starting position of the direction in the name
+    '''
     m = street_type_re.search(street_name.strip())
     if m:
         street_type = m.group()
-        # return1 == True if it is a valid direction
-        # return2 == True if the direction needs fixing
-        # return3 is the starting position of the direction in the name string
         return street_type in direction, street_type in direction_map.keys(), m.start()
     else:
         return False, False, 0
 
 def update_name(name, mapping, direction_map):
+    '''Update a street name to desired formatting.
+
+    This function takes a street name argument and updates the 
+    street type and direction based on a set of expected values. 
+    The method for updating is to split the string and then
+    reconstruct it after editing.
+
+    Returns:
+    Updated street name
+    '''
     # check first to see if a direction is at the end of the name
     check1, check2, index = check_if_direction(name)
     direct = ""
@@ -149,6 +189,14 @@ problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
 
 def shape_element(element):
+    '''Creates a JSON object from a XML element.
+
+    This function formats an XML element with a "node" or "way" 
+    tag into a JSON object.
+
+    Returns:
+    JSON style dictionary object
+    '''
     node = {}
     if element.tag == "node" or element.tag == "way" :
         
@@ -175,7 +223,7 @@ def shape_element(element):
         address = {}
         for t in element.findall('tag'):
             if re.search(problemchars, t.get('k')):
-                pass
+                pass # ignore any element with special characters
             elif re.search(r'\w+:\w+:\w+', t.get('k')):
                 pass # ignore any element with multiple colon characters
             elif 'addr' in t.get('k'):
@@ -201,7 +249,7 @@ def shape_element(element):
         return None
 
 def process_map(file_in, pretty = False):
-    # You do not need to change this file
+    '''Converts an OSM file into a JSON file.'''
     file_out = "{0}.json".format(file_in)
     data = []
     with codecs.open(file_out, "w") as fo:
