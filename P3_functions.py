@@ -5,7 +5,7 @@ import re
 import codecs
 import json
 
-OSMFILE = "washdc.osm"
+OSMFILE = "sample.osm"
 
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
